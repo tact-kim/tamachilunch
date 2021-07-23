@@ -1,9 +1,9 @@
 /api/tmp/*
-# /api/vendor/*
-# /api/log/*
-# /api/bin/*
+/api/vendor/*
+/api/log/*
+/api/bin/*
 
-# /front/.next/*
+/front/.next/*
 /front/node_modules/*
 
 
