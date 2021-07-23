@@ -1,11 +1,31 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import {FormControl, Select, MenuItem, Button} from '@material-ui/core';
 import {useState} from 'react';
+import {
+  FormControl,
+  Select,
+  MenuItem,
+  Button,
+  Container,
+  Card,
+  CardContent} 
+  from '@material-ui/core';
+
+import {
+  makeStyles
+} from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(3),
+    minWidth: 200
+  }
+}))
 
 export default function Home() {
   
+  const classes = useStyles();
   const [genre, setGenre] = useState('');
   const [restaurant, setRestaurant] = useState('');
   const search = () =>{
@@ -17,29 +37,36 @@ export default function Home() {
     setRestaurant(result);
   }
   return (
-    <div>
-      <FormControl>
-        <Select value={genre} onChange={(e) => setGenre(e.target.value)}>
-          <MenuItem value="chainese">中華</MenuItem>
-          <MenuItem value="japanese">和食</MenuItem>
-          <MenuItem value="italian">洋食</MenuItem>
-          <MenuItem value="ramen">ラーメン</MenuItem>
-        </Select>
-        <Button color="primary" onClick={search}>
-          探す
-        </Button>
-      </FormControl>
+    <>
       <div>
-        {Object.values(restaurant).map(function(r){
-          return (
-            <div>
-              {r.name}
-              {r.genre}
-              {r.address}
-            </div>
-            );
-        })}
+        Tamachilunch
       </div>
-    </div>
+      <Container fixed>
+        <FormControl className={classes.formControl}>
+          <Select value={genre} onChange={(e) => setGenre(e.target.value)}>
+            <MenuItem value="chainese">中華</MenuItem>
+            <MenuItem value="japanese">和食</MenuItem>
+            <MenuItem value="italian">洋食</MenuItem>
+            <MenuItem value="ramen">ラーメン</MenuItem>
+          </Select>
+          <Button color="primary" onClick={search}>
+            探す
+          </Button>
+        </FormControl>
+        <div>
+          {Object.values(restaurant).map(function(r){
+            return (
+              <Card>
+                <CardContent>
+                  <div>{r.name}</div>
+                  <div>{r.genre}</div>
+                  <div>{r.address}</div>
+                </CardContent>
+              </Card>
+              );
+            })}
+        </div>
+      </Container>
+    </>
   )
 }
