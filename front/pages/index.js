@@ -70,7 +70,7 @@ export default function Home() {
                     style={{border: 0}}
                     loading="lazy"
                     allowfullscreen
-                    src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDA_12U4PFBgiBwDyqj3pWjtXwRb0tzX1Q&q=${r.address}`}>
+                    src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${r.address}`}>
                       </iframe>
                 </CardContent>
               </Card>
