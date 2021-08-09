@@ -31,8 +31,8 @@ export default function Home() {
   const search = () =>{
     // TO DO apiに流す予定
     const result = {
-      1: {'name': '龍祥軒', 'genre': 'chainese', 'address': '東京都港区芝浦3-6-8 うつみビル1F'},
-      2: {'name': '武蔵', 'genre': 'ramen', 'address': '東京都港区芝浦３丁目１２−５'}
+      1: {'name': '龍祥軒', 'genre': '中華', 'address': '東京都港区芝浦3-6-8うつみビル1F'},
+      2: {'name': '武蔵', 'genre': 'ラーメン', 'address': '東京都港区芝浦３丁目１２−５'}
     };
     setRestaurant(result);
   }
@@ -61,6 +61,11 @@ export default function Home() {
                   <div>{r.name}</div>
                   <div>{r.genre}</div>
                   <div>{r.address}</div>
+                  <iframe
+                    loading="lazy"
+                    allowfullscreen
+                    src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDA_12U4PFBgiBwDyqj3pWjtXwRb0tzX1Q&q=${r.address}`}>
+                      </iframe>
                 </CardContent>
               </Card>
               );
