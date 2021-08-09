@@ -38,10 +38,7 @@ export default function Home() {
   }
   return (
     <>
-      <div>
-        Tamachilunch
-      </div>
-      <Container fixed>
+      <Container>
         <FormControl className={classes.formControl}>
           <Select value={genre} onChange={(e) => setGenre(e.target.value)}>
             <MenuItem value="chainese">中華</MenuItem>
@@ -62,6 +59,7 @@ export default function Home() {
                   <div>{r.genre}</div>
                   <div>{r.address}</div>
                   <iframe
+                    style={{border: 0}}
                     loading="lazy"
                     allowfullscreen
                     src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDA_12U4PFBgiBwDyqj3pWjtXwRb0tzX1Q&q=${r.address}`}>
