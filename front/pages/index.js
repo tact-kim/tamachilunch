@@ -23,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+export async function restaurantList() {
+  const searchRes = await fetch('http://localhost:3000/restaurants/index');
+  const jsonList = searchRes.json();
+  // console.log(jsonList);
+  return jsonList;
+}
 export default function Home() {
   
   const classes = useStyles();
@@ -30,11 +36,13 @@ export default function Home() {
   const [restaurant, setRestaurant] = useState('');
   const search = () =>{
     // TO DO apiに流す予定
-    const result = {
-      1: {'name': '龍祥軒', 'genre': '中華', 'address': '東京都港区芝浦3-6-8うつみビル1F'},
-      2: {'name': '武蔵', 'genre': 'ラーメン', 'address': '東京都港区芝浦３丁目１２−５'}
-    };
-    setRestaurant(result);
+    // const result = {
+    //   1: {'name': '龍祥軒', 'genre': '中華', 'address': '東京都港区芝浦3-6-8うつみビル1F'},
+    //   2: {'name': '武蔵', 'genre': 'ラーメン', 'address': '東京都港区芝浦３丁目１２−５'}
+    // };
+
+    setRestaurant(restaurantList());
+    console.log(restaurant);
   }
   return (
     <>
