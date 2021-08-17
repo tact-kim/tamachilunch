@@ -1,7 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import {useState} from 'react';
+import axios from 'axios';
+import {useState, useEffect, useCallback} from 'react';
+import getConfig from "next/config"
 import {
   FormControl,
   Select,
@@ -23,27 +25,49 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export async function restaurantList() {
-  const searchRes = await fetch('http://localhost:3000/restaurants/index');
-  const jsonList = searchRes.json();
-  // console.log(jsonList);
-  return jsonList;
+export function restaurantList() {
+  // const searchRes = await fetch('http://localhost:3000/restaurants/index');
+  // const jsonList = searchRes;
+  // return jsonList;
+  axios({
+    method: "GET",
+    url: 'http://localhost:3000/restaurants/index',
+  }).then((result) => {
+    console.log(result.data[0]);
+    return result.data;
+  }).catch((err) => {
+    alert("だめです。");
+    return false;
+  });
+  // console.log(result.data);
+  // return result;
 }
 export default function Home() {
-  
+  console.log(process.env.NEXT_PUBLIC_APP_GOOGLE_MAPS_API_KEY);
   const classes = useStyles();
+  const {env} = getConfig();
+  const [apiKey, setApiKey] = useState('');
   const [genre, setGenre] = useState('');
   const [restaurant, setRestaurant] = useState('');
-  const search = () =>{
+  const search = useCallback(
+    () =>{
     // TO DO apiに流す予定
     // const result = {
     //   1: {'name': '龍祥軒', 'genre': '中華', 'address': '東京都港区芝浦3-6-8うつみビル1F'},
     //   2: {'name': '武蔵', 'genre': 'ラーメン', 'address': '東京都港区芝浦３丁目１２−５'}
     // };
-
-    setRestaurant(restaurantList());
+    let listFlg = restaurantList();
+    if (listFlg === false) {
+      alert("ごめんなさい")
+    } else {
+      setRestaurant(restaurantList());
+    }
     console.log(restaurant);
-  }
+    // setRestaurant(result);
+  });
+  useEffect(() => {
+    
+  }, []);
   return (
     <>
       <Container>
@@ -61,7 +85,7 @@ export default function Home() {
         <div>
           {Object.values(restaurant).map(function(r){
             return (
-              <Card>
+              <Card key={Math.random()}>
                 <CardContent>
                   <div>{r.name}</div>
                   <div>{r.genre}</div>
@@ -69,8 +93,8 @@ export default function Home() {
                   <iframe
                     style={{border: 0}}
                     loading="lazy"
-                    allowfullscreen
-                    src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${r.address}`}>
+                    allowFullScreen
+                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_APP_GOOGLE_MAPS_API_KEY}&q=${r.address}`}>
                       </iframe>
                 </CardContent>
               </Card>
